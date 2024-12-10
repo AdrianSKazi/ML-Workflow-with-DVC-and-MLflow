@@ -1,0 +1,34 @@
+The dvc stage add command is used to define stages in a machine learning or data pipeline. These stages represent steps like data preprocessing, model training, or evaluation.
+
+-n - new stage "preprocess"
+-p - tracks the parameter that are available 
+-d - specify dependencies
+-o - output of the stage
+
+---------------------------------------------
+PREPROCESS STAGE
+
+dvc stage add -n preprocess 
+  -p preprocess.input, preprocess.output
+  -d src/preprocess.py 
+  -d data/raw/data.csv 
+  -o data/processed/data.csv 
+  python src/preprocess.py
+
+---------------------------------------------
+TRAIN STAGE
+
+dvc stage add -n train
+    -p train.data,train.model,train.random_state,train.n_estimators,train.max_depth
+    -d src/train.py -d data/raw/data.csv
+    -o models/model.pkl
+    python src/train.py
+
+---------------------------------------------
+EVAL STAGE
+
+dvc stage add -n evaluate
+    -d src/evaluate.py
+    -d models/model.pkl
+    -d data/raw/data.csv
+    python src/evaluate.py
