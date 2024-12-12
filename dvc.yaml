@@ -1,9 +1,14 @@
 stages:
   preprocess:
-    cmd: preprocess.output -d src/preprocess.py -d data/raw/data/csv -o data/processed/data.csv
-      python src/preprocess.py
+    cmd: python src/preprocess.py
     deps:
+    - data/raw/data.csv
+    - src/preprocess.py
+    params:
     - preprocess.input
+    - preprocess.output
+    outs:
+    - data/processed/data.csv
   train:
     cmd: python src/train.py
     deps:
